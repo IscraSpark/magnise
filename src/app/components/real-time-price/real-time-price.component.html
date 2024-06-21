@@ -1,0 +1,19 @@
+<div class="market-data">
+  <div class="data-box">
+    <div class="data-box-column">
+      <span>Symbol:</span>
+      <span *ngIf="realTimeData">{{ marketDataService.activeSymbol }}</span>
+      <span *ngIf="!realTimeData">???</span>
+    </div>
+    <div class="data-box-column">
+      <span>Price:</span>
+      <span *ngIf="realTimeData">{{ realTimeData?.ask.price | currency }}</span>
+      <span *ngIf="!realTimeData">???</span>
+    </div>
+    <div class="data-box-column">
+      <span>Time:</span>
+      <span *ngIf="realTimeData">{{ realTimeData?.ask.timestamp | date:'medium' }}</span>
+      <span *ngIf="!realTimeData">???</span>
+    </div>
+  </div>
+</div>

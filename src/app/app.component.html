@@ -1,3 +1,26 @@
-<ng-container>
-    <div>hello world</div>
-</ng-container>
+<div class="container">
+    <div class="subscription">
+      <input 
+        type="text" 
+        [formControl]="control"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        @for (valute of filteredValutes | async; track valute) {
+          <mat-option [value]="valute">{{valute}}</mat-option>
+        }
+      </mat-autocomplete>
+      <button (click)="onSubmit()">Subscribe</button>
+    </div>
+    <h3>Market data:</h3>
+    <app-real-time-price></app-real-time-price>
+
+    
+    <app-historical-chart></app-historical-chart>
+  
+    
+  </div>
+  
+
+
+

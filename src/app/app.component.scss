@@ -1,0 +1,34 @@
+.container {
+    margin: 0 auto;
+    width: 80%;
+    padding: 20px;
+  }
+  
+  .subscription {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .subscription input {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .charting-data {
+    margin-bottom: 20px;
+  }
+  
+  .chart-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .chart-box img {
+    max-width: 100%;
+  }
+  
