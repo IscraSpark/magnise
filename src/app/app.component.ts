@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     );
     
     this.valutes = this.marketDataService.symbols.map(symbol => symbol.symbol);
-    // this.marketDataService.connect('BTC/USD');
+    this.marketDataService.connect('BTC/USD');
     // this.marketDataService.fetchHistoricalData('BTC/USD');
   }
 

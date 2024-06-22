@@ -12,7 +12,6 @@ export class RealTimePriceComponent implements OnInit {
   constructor(public marketDataService: MarketDataService) {}
 
   ngOnInit(): void {
-    console.log('123');
     
     this.marketDataService.getRealTimeData().subscribe(data => {
       this.realTimeData = data;
