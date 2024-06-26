@@ -99,7 +99,6 @@ export class MarketDataService {
   }
 
   fetchHistoricalData(symbol: string): void {
-    console.log(symbol);
     
     let currSymbol: {symbol: string, id: string} | undefined = this.symbols.find(sym => sym.symbol == symbol);
     console.log(currSymbol);
@@ -107,7 +106,6 @@ export class MarketDataService {
       const url = `${API_URL}/api/bars/v1/bars/count-back?instrumentId=${currSymbol.id}&provider=oanda&interval=1&periodicity=minute&barsCount=10`;
       this.http.get(url, { headers: this.getHeaders() })
         .subscribe(data =>{ 
-          console.log(data);
           this.historicalDataSubject.next(data)
         });
     }
