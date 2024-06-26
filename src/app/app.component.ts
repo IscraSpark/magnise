@@ -43,7 +43,11 @@ export class AppComponent implements OnInit, OnDestroy {
           this.marketDataService.fetchHistoricalData(startValue);
           this.filteredValutes = this.control.valueChanges.pipe(
             startWith(''),
-            map(value => this._filter(value || '')),
+            map(value => {
+              console.log('ff');
+              
+              return  this._filter(value || '')
+            }),
           );
         },
         (error) => {

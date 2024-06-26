@@ -7,13 +7,13 @@
     </div>
     <div class="data-box-column">
       <span>Price:</span>
-      <span *ngIf="realTimeData">{{ realTimeData?.ask.price | currency }}</span>
-      <span *ngIf="!realTimeData">???</span>
+      <span *ngIf="realTimeData?.ask?.price">{{ realTimeData?.ask?.price | currency }}</span>
+      <span *ngIf="!realTimeData?.ask?.price">{{ prevPrise }}</span>
     </div>
     <div class="data-box-column">
       <span>Time:</span>
-      <span *ngIf="realTimeData">{{ realTimeData?.ask.timestamp | date:'medium' }}</span>
-      <span *ngIf="!realTimeData">???</span>
+      <span *ngIf="realTimeData?.ask?.timestamp">{{ realTimeData?.ask?.timestamp | date:'medium' }}</span>
+      <span *ngIf="!realTimeData?.ask?.price">{{ prevTime }}</span>
     </div>
   </div>
 </div>

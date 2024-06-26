@@ -6,9 +6,7 @@
         [matAutocomplete]="auto"
       />
       <mat-autocomplete #auto="matAutocomplete">
-        @for (valute of filteredValutes | async; track valute) {
-          <mat-option [value]="valute">{{valute}}</mat-option>
-        }
+        <mat-option *ngFor="let valute of filteredValutes | async" [value]="valute">{{valute}}</mat-option>
       </mat-autocomplete>
       <button (click)="onSubmit()">Subscribe</button>
     </div>
