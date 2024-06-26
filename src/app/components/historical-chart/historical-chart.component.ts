@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MarketDataService } from 'src/app/services/market-data.service';
 import { Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-date-fns';
+import { Subscription } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -11,25 +12,21 @@ Chart.register(...registerables);
   templateUrl: './historical-chart.component.html',
   styleUrl: './historical-chart.component.scss'
 })
-export class HistoricalChartComponent implements OnInit {
-  realTimeData: any;
+export class HistoricalChartComponent implements OnInit, OnDestroy {
+  historicalTimeData: any;
   public chart: any;
-  private newData = [
-    { t: '2023-06-20T10:00:00Z', v: 5 },
-    { t: '2023-06-20T11:00:00Z', v: 10 },
-    { t: '2023-06-20T12:00:00Z', v: 7 },
-    { t: '2023-06-20T13:00:00Z', v: 11 },
-    { t: '2023-06-20T14:00:00Z', v: 9 }
-  ]; // Example new data set
+  subscription = new Subscription;
 
   constructor(private marketDataService: MarketDataService) {}
 
   ngOnInit(): void {
-    this.marketDataService.getRealTimeData().subscribe(data => {
-      this.realTimeData = data;
-    });
     this.initializeChart();
-    this.updateChart(this.newData)
+    this.subscription.add(this.marketDataService.getHistoricalData().subscribe(data => {
+      this.historicalTimeData = data;
+      this.updateChart(this.historicalTimeData)
+    }));
+    
+    
   }
 
   initializeChart(): void {
@@ -76,26 +73,30 @@ export class HistoricalChartComponent implements OnInit {
     });
   }
 
-  updateChart(data: any[]): void {
-    const values = data.map(item => item.v);
-    const maxValue = Math.max(...values);
-    const maxYAxisValue = Math.max(maxValue + 10, 100);
+  updateChart(data: { data:any[] }): void {
+    const values = data.data.map(item => item.v);
+      const maxValue = Math.max(...values);
+      const maxYAxisValue = Math.max(maxValue + 10, 100);
 
-    this.chart.data.labels = [];
-    this.chart.data.datasets[0].data = [];
-
-    data.forEach(item => {
+      this.chart.data.labels = [];
+      this.chart.data.datasets[0].data = [];
+      
+    data.data.forEach(item => {
       const time = new Date(item.t);
       const value = item.v;
-      this.chart.data.labels.push(time);
-      this.chart.data.datasets[0].data.push(value);
+        this.chart.data.labels.push(time);
+        this.chart.data.datasets[0].data.push(value);
     });
+      
+      // Update the y-axis maximum value
+      this.chart.options.scales.y.max = maxYAxisValue;
 
-    // Update the y-axis maximum value
-    this.chart.options.scales.y.max = maxYAxisValue;
+      // Update the chart
+      this.chart.update();
+  }
 
-    // Update the chart
-    this.chart.update();
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }
